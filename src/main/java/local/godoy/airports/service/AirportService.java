@@ -5,6 +5,7 @@
 package local.godoy.airports.service;
 
 import java.util.List;
+import local.godoy.airports.DTO.AirportMinDTO;
 import local.godoy.airports.entities.Airport;
 import local.godoy.airports.repositories.AirportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,13 @@ public class AirportService {
         List<Airport> result = airportRepository.findByCityIgnoreCase(city);
         return result;
         
+    }
+    
+    public List<AirportMinDTO> findByCountry(String country) {
+        List<Airport> resultAirport = airportRepository.findByCountryIgnoreCase(country);
+        
+        List<AirportMinDTO> resultDTO = resultAirport.stream().map(x -> new AirportMinDTO(x)).toList();
+        
+        return resultDTO;
     }
 }
