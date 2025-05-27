@@ -6,7 +6,9 @@ package local.godoy.airports.service;
 
 import java.util.List;
 import local.godoy.airports.DTO.AirportMinDTO;
+import local.godoy.airports.DTO.AirportNearMeDTO;
 import local.godoy.airports.entities.Airport;
+import local.godoy.airports.projection.AirportNearMeProjection;
 import local.godoy.airports.repositories.AirportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,4 +49,14 @@ public class AirportService {
         return result;
         
     }
+    
+    public List<AirportNearMeDTO> findNearMe(double latitude, double longitude) {
+       List<AirportNearMeProjection> resultNearAirports = airportRepository.findNearMe(latitude, longitude);
+    
+       List<AirportNearMeDTO> resultDTO = resultNearAirports.stream()
+               .map(x -> new AirportNearMeDTO(x)).toList();
+  
+       return resultDTO;
+    }
+    
 }
